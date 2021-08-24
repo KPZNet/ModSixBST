@@ -31,7 +31,7 @@ class BSTree:
         def __insert(node, key):
             if node is None:
                 return BSTNode (key)
-            # Otherwise recur down the tree
+            # move down the tree
             if key < node.key:
                 node.left = __insert (node.left, key)
             else:
