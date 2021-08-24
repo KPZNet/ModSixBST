@@ -17,4 +17,12 @@ PL()
 bst.rebalance()
 bst.print_tree("Balanced Tree")
 
+bst.delete(7)
+bst.delete(324)
+bst.rebalance()
+bst.print_tree("Updated Tree with 7 and 324 deleted")
 
+bst.insert(7)
+bst.insert(324)
+bst.rebalance()
+bst.print_tree("Updated Tree with 7 and 324 re-inserted")

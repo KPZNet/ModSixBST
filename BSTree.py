@@ -5,7 +5,7 @@ class BSTNode:
         self.key = key
         self.payload = payload
         if payload == None:
-            self.payload = key
+            self.payload = str(key)
         self.left = None
         self.right = None
 
