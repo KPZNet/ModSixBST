@@ -65,7 +65,8 @@ class BSTree:
                 node.right = __deleteNode (node.right, temp.key)
             return node
 
-        return __deleteNode (self.root, key)
+        self.root = __deleteNode (self.root, key)
+        return self.root
 
     COUNT = [10]
 
