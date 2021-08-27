@@ -11,7 +11,7 @@ print("Input List")
 print(keys)
 PL()
 bst = BSTree()
-bst.BuildTree(keys)
+bst.BuildTreeFromArray(keys)
 bst.print_tree("Initial Tree")
 
 bst.delete(1)

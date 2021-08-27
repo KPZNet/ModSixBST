@@ -23,7 +23,7 @@ class BSTree:
         if _root != None:
             self.root = _root
 
-    def BuildTree(self, keys):
+    def BuildTreeFromArray(self, keys):
         for key in keys:
             self.insert(key)
 
@@ -31,13 +31,16 @@ class BSTree:
         def __insert(node, key):
             if node is None:
                 return BSTNode (key)
-            # move down the tree
+            
+            #remove duplicates
+            if key == node.key:
+                return node
+            
             if key < node.key:
                 node.left = __insert (node.left, key)
             else:
                 node.right = __insert (node.right, key)
 
-            # return the (unchanged) node pointer
             return node
 
         self.root = __insert (self.root, key)
@@ -69,7 +72,6 @@ class BSTree:
         return self.root
 
     COUNT = [10]
-
     def __print2DUtil(self, root, space):
         # Base case
         if (root == None):
@@ -174,7 +176,6 @@ class BSTree:
         return [i.payload for i in d]
 
     def preOrder(self):
-
         def __preOrder(node, d):
             if not node:
                 return
@@ -187,7 +188,6 @@ class BSTree:
         return d
 
     def search(self, key):
-
         def __search(node, key):
             if node == None:
                 return None
