@@ -1,6 +1,4 @@
 class BSTNode:
-
-    # Constructor to create a new node
     def __init__(self, key, payload=None):
         self.key = key
         self.payload = payload
@@ -11,7 +9,6 @@ class BSTNode:
 
     def __str__(self):
         return str (self.key)
-
 
 class BSTree:
     root = None
@@ -45,6 +42,14 @@ class BSTree:
 
         self.root = __insert (self.root, key)
         return self.root
+
+    def get_min_value_node(self, node):
+        current = node
+        # loop down to find the leftmost leaf
+        while (current.left is not None):
+            current = current.left
+
+        return current
 
     def delete(self, key):
         def __deleteNode(node, key):
@@ -138,14 +143,12 @@ class BSTree:
             print (line)
 
     def rebalance(self):
-
         def storeBSTNodes(root, nodes):
             if not root:
                 return
             storeBSTNodes (root.left, nodes)
             nodes.append (root)
             storeBSTNodes (root.right, nodes)
-
         def buildTreeUtil(nodes, start, end):
             if start > end:
                 return None
@@ -156,21 +159,17 @@ class BSTree:
             node.left = buildTreeUtil (nodes, start, mid - 1)
             node.right = buildTreeUtil (nodes, mid + 1, end)
             return node
-
         nodes = []
         storeBSTNodes (self.root, nodes)
-
         n = len (nodes)
         self.root = buildTreeUtil (nodes, 0, n - 1)
 
     def inorder(self):
-
         def __inorder(node, d):
             if node is not None:
                 __inorder (node.left, d)
                 d.append (node)
                 __inorder (node.right, d)
-
         d = []
         __inorder (self.root, d)
         return [i.payload for i in d]
@@ -182,7 +181,6 @@ class BSTree:
             d.append (node)
             __preOrder (node.left, d)
             __preOrder (node.right, d)
-
         d = []
         __preOrder (self.root, d)
         return d
@@ -191,13 +189,11 @@ class BSTree:
         def __search(node, key):
             if node == None:
                 return None
-
             elif node.key == key:
                 return node.payload
             elif node.key < key:
                 return __search (node.right, key)
             else:
                 return __search (node.left, key)
-
         return __search (self.root, key)
 
