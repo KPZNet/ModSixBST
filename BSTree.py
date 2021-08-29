@@ -1,3 +1,7 @@
+# CSC506 Module 6, Option 1
+# Kenneth Ceglia
+
+
 class BSTNode:
     def __init__(self, key, payload=None):
         self.key = key
