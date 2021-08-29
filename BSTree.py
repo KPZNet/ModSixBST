@@ -1,39 +1,54 @@
 # CSC506 Module 6, Option 1
 # Kenneth Ceglia
 
-
+#Node Class for Binary Search Tree
 class BSTNode:
+
+    #Init method for Nodes to set key and payload
     def __init__(self, key, payload=None):
         self.key = key
         self.payload = payload
+        #Set default payload is none given
         if payload == None:
             self.payload = "Payload " + str(key)
+        #Initialize left and right pointers to None
         self.left = None
         self.right = None
 
+    #Convenience method to print out Node
     def __str__(self):
-        return str (self.key) + " : " + str(self.payload)
+        return "Node Key:" + str (self.key) + " : " + str(self.payload)
 
+#Binary Search Tree Class
+#Wraps up Root Node class into Tree with all methods
 class BSTree:
+    #root node for tree
     root = None
 
+    #convenience print function to pretty print tree structure
     def __str__(self):
         return self.print_tree()
 
+    #Constructor
     def __init__(self, _root=None):
         if _root != None:
             self.root = _root
 
-    def BuildTreeFromArray(self, keys):
+    #Build tree from input List array
+    #returns root node after building tree
+    def BuildTree(self, keys):
         for key in keys:
             self.insert(key)
+        return self.root
 
-    def insert(self, key):
+    #insert a new key
+    #duplicates are not added
+    def insert(self, key, payload=None):
         def __insert(node, key):
             if node is None:
-                return BSTNode (key)
+                return BSTNode (key, payload)
             
-            #remove duplicates
+            # remove duplicates
             if key == node.key:
                 return node
             
@@ -47,6 +62,7 @@ class BSTree:
         self.root = __insert (self.root, key)
         return self.root
 
+    #Returns minimum tree key
     def get_min_value_node(self, node):
         current = node
         # loop down to find the leftmost leaf
@@ -55,6 +71,7 @@ class BSTree:
 
         return current
 
+    #deletes node with input key
     def delete(self, key):
         def __deleteNode(node, key):
             if node is None:
@@ -80,6 +97,7 @@ class BSTree:
         self.root = __deleteNode (self.root, key)
         return self.root
 
+    #Convenient pretty print support method
     COUNT = [10]
     def __print2DUtil(self, root, space):
         # Base case
@@ -97,8 +115,8 @@ class BSTree:
 
         self._BSTree__print2DUtil (root.left, space)
 
+    #print entire tree in graphical format
     def print_tree(self, title="BST", val="key", left="left", right="right"):
-
         def display(root, val=val, left=left, right=right):
             if getattr (root, right) is None and getattr (root, left) is None:
                 line = '%s' % getattr (root, val)
@@ -146,6 +164,7 @@ class BSTree:
         for line in lines:
             print (line)
 
+    #balance the tree
     def rebalance(self):
         def storeBSTNodes(root, nodes):
             if not root:
@@ -153,6 +172,7 @@ class BSTree:
             storeBSTNodes (root.left, nodes)
             nodes.append (root)
             storeBSTNodes (root.right, nodes)
+            
         def buildTreeUtil(nodes, start, end):
             if start > end:
                 return None
@@ -163,53 +183,38 @@ class BSTree:
             node.left = buildTreeUtil (nodes, start, mid - 1)
             node.right = buildTreeUtil (nodes, mid + 1, end)
             return node
+        #gets nodes in order
+        #re-add in middle out fashion to build new balanced tree
         nodes = []
         storeBSTNodes (self.root, nodes)
         n = len (nodes)
         self.root = buildTreeUtil (nodes, 0, n - 1)
 
+    #print out nodes in key order ascending
     def inorder(self):
+
         def __inorder(node, d):
             if node is not None:
                 __inorder (node.left, d)
                 d.append (node)
                 __inorder (node.right, d)
+
         d = []
         __inorder (self.root, d)
         return [i.payload for i in d]
 
-
+    #Bonus method to search and return data value
     def compare_data(self, dataValue):
+
         def __inorder(node, d, data):
             if node is not None:
                 __inorder (node.left, d, data)
                 if node.payload == data:
                     d.append (node)
                 __inorder (node.right, d, data)
+
         d = []
         __inorder (self.root, d, dataValue)
         return d
 
-    def preOrder(self):
-        def __preOrder(node, d):
-            if not node:
-                return
-            d.append (node)
-            __preOrder (node.left, d)
-            __preOrder (node.right, d)
-        d = []
-        __preOrder (self.root, d)
-        return d
-
-    def search(self, key):
-        def __search(node, key):
-            if node == None:
-                return None
-            elif node.key == key:
-                return node.payload
-            elif node.key < key:
-                return __search (node.right, key)
-            else:
-                return __search (node.left, key)
-        return __search (self.root, key)
 
