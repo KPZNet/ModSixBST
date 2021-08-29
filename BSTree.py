@@ -3,12 +3,12 @@ class BSTNode:
         self.key = key
         self.payload = payload
         if payload == None:
-            self.payload = str(key)
+            self.payload = "Payload " + str(key)
         self.left = None
         self.right = None
 
     def __str__(self):
-        return str (self.key)
+        return str (self.key) + " : " + str(self.payload)
 
 class BSTree:
     root = None
@@ -173,6 +173,18 @@ class BSTree:
         d = []
         __inorder (self.root, d)
         return [i.payload for i in d]
+
+
+    def compare_data(self, dataValue):
+        def __inorder(node, d, data):
+            if node is not None:
+                __inorder (node.left, d, data)
+                if node.payload == data:
+                    d.append (node)
+                __inorder (node.right, d, data)
+        d = []
+        __inorder (self.root, d, dataValue)
+        return d
 
     def preOrder(self):
         def __preOrder(node, d):

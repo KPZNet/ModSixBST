@@ -32,3 +32,11 @@ bst.insert(9)
 bst.insert(67)
 
 bst.print_tree("Updated Tree with 9 and 67 added back")
+
+PL()
+print("Bonus !!  Compare Node Data...")
+nf = bst.compare_data("Payload 5")
+nodeFound = None
+if nf:
+    nodeFound = nf[0]
+print("Compared Data to Payload and Found :" + nodeFound.payload)
